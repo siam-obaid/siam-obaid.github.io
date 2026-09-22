@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Publications — Md Obaidullah</title>
-<meta name="description" content="Peer-reviewed articles, book chapters, book reviews, and working papers by Md Obaidullah, searchable by theme, year, venue, and coauthor.">
+<title>Public writing — Md Obaidullah</title>
+<meta name="description" content="Essays and commentary by Md Obaidullah in Asia Times, The Diplomat, East Asia Forum, New Age, and The Daily Star.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
@@ -30,8 +30,8 @@
   <nav class="secnav" aria-label="Sections">
     <a href="index.html">Home</a>
     <a href="research.html">Research</a>
-    <a href="publications.html" aria-current="page">Publications</a>
-    <a href="writing.html">Public writing</a>
+    <a href="publications.html">Publications</a>
+    <a href="writing.html" aria-current="page">Public writing</a>
     <a href="teaching.html">Teaching</a>
     <a href="cv.html">Curriculum vitae</a>
   </nav>
@@ -49,37 +49,26 @@
 
 <main class="content">
 <header class="pagehead">
-  <h1 class="pagetitle">Publications</h1>
-  <p class="pagesub">Peer-reviewed articles, book chapters, book reviews, and working papers. Filter by theme or year, or search by title, venue, or coauthor. Essays and commentary are listed separately under <a href="writing.html">public writing</a>.</p>
+  <h1 class="pagetitle">Public writing</h1>
+  <p class="pagesub">Essays and commentary for policy and general audiences, on South Asian foreign policy, borders and displacement, and great power competition.</p>
 </header>
 
-<div class="filters">
-  <div class="fgroup">
-    <h3>By theme</h3>
-    <div id="themebars"></div>
-  </div>
-  <div class="fgroup">
-    <h3>By year</h3>
-    <div class="ybars" id="ybars"></div>
-    <div class="yfoot" id="yfoot"></div>
-  </div>
-</div>
+<div class="chips" id="outletchips" role="group" aria-label="Filter by outlet" style="margin-bottom:16px"></div>
 
 <div class="searchrow">
   <div class="searchbox">
-    <label class="sr" for="q">Search publications</label>
-    <input id="q" type="search" autocomplete="off" placeholder="Search titles, venues, coauthors…">
+    <label class="sr" for="q">Search public writing</label>
+    <input id="q" type="search" autocomplete="off" placeholder="Search titles and outlets…">
     <span class="slash">/</span>
   </div>
   <label class="sr" for="sort">Sort</label>
   <select class="sortsel" id="sort">
     <option value="new">Newest first</option>
     <option value="old">Oldest first</option>
-    <option value="venue">Venue A–Z</option>
+    <option value="venue">Outlet A–Z</option>
     <option value="title">Title A–Z</option>
   </select>
 </div>
-<div class="chips" id="typechips" role="group" aria-label="Filter by kind"></div>
 
 <p class="resultline">
   <span id="count" aria-live="polite"></span>
@@ -87,9 +76,9 @@
   <button class="linkbtn" id="expandall" type="button">Open all citations</button>
 </p>
 
-<ul class="entries" id="entries" data-scope="scholarly"></ul>
+<ul class="entries" id="entries" data-scope="public"></ul>
 <div class="empty" id="empty" hidden>
-  <p>Nothing matches. Try a coauthor's surname, a journal title, or clear the filters.</p>
+  <p>Nothing matches that search. Clear the filters to see everything.</p>
   <p><button class="copybtn" id="reset" type="button">Clear filters</button></p>
 </div>
 </main>
