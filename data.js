@@ -17,7 +17,6 @@ const THEMES=[
   {k:"ped",label:"Political economy and development",c:"#63723b",
    blurb:"Fieldwork-based studies of informal labour, health access, and household vulnerability in urban and riverine Bangladesh, and the trade politics that shape them."}
 ];
-const TCOLOR=Object.fromEntries(THEMES.map(t=>[t.k,t.c]));
 
 const DATA=[
  {t:"article",url:"",y:2026,th:"sec",title:"Machiavellian and Hobbesian Foundations of Democratic Decline in Bangladesh",venue:"Contemporary South Asia",detail:"pp. 1–26",authors:[ME],solo:true,geo:["BD"]},
