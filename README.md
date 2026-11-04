@@ -25,7 +25,7 @@ python3 source/build.py
 
 For page-only changes, `python3 source/build.py --skip-pdf` keeps the existing CV PDF. Commit the generated root files with their source changes. Publishing continues through the existing GitHub Pages configuration.
 
-The site uses system fonts and loads no trackers or external JavaScript. All publication records are included directly in HTML and remain readable without JavaScript. Search and publication-type filters are optional enhancements.
+The site uses Palatino when installed, with a self-hosted TeX Gyre Pagella web font for matching typography on other devices. The cool slate background and typography are shared across all pages. Font files and their license are in `source/assets/fonts/`, copied to `fonts/` by the generator. The site loads no trackers, external font services, or external JavaScript. All publication records are included directly in HTML and remain readable without JavaScript. Search and publication-type filters are optional enhancements.
 
 ## CV
 

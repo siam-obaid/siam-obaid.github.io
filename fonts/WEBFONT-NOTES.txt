@@ -1,0 +1,16 @@
+TeX Gyre Pagella 2.501 web-font packaging
+
+Source: https://mirrors.ctan.org/fonts/tex-gyre.zip
+Upstream: https://ctan.org/pkg/tex-gyre-pagella
+
+The four original OpenType faces were repackaged losslessly as WOFF2 using
+fontTools and Brotli. No glyphs were removed or redesigned; original font
+names, copyright records, and font metrics are retained. These WOFF2 files
+are web packaging for this website, not an official upstream release.
+The upstream license, README, and manifest are included alongside the fonts.
+
+Web files:
+texgyrepagella-regular.woff2
+texgyrepagella-italic.woff2
+texgyrepagella-bold.woff2
+texgyrepagella-bolditalic.woff2
