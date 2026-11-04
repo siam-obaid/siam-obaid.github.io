@@ -1,5 +1,6 @@
 """Generate a portable academic site and its downloadable CV. No web build tools required."""
 import html
+import hashlib
 import json
 import os
 import sys
@@ -57,6 +58,8 @@ def article(p, home=False, with_search=True):
 
 def page(filename, title, description, body):
     prefix = "/" if filename == "404.html" else ""
+    style_version = hashlib.sha256((ROOT/'assets'/'styles.css').read_bytes()).hexdigest()[:12]
+    script_version = hashlib.sha256((ROOT/'assets'/'site.js').read_bytes()).hexdigest()[:12]
     nav = "".join(f'<a href="{prefix}{url}"{(" aria-current="+chr(34)+"page"+chr(34)) if url == filename else ""}>{name}</a>' for url, name in NAV)
     indexing = '<meta name="robots" content="noindex">' if filename == "404.html" else ""
     canonical = SITE_URL + ("/" if filename == "index.html" else "/" + filename)
@@ -68,7 +71,7 @@ def page(filename, title, description, body):
 {indexing}
 <meta name="theme-color" content="#263f50"><link rel="canonical" href="{canonical}">
 <meta property="og:title" content="{E(title)} | Md. Obaidullah"><meta property="og:description" content="{E(description)}"><meta property="og:type" content="website"><meta property="og:url" content="{canonical}"><meta property="og:image" content="{SITE_URL}/portrait.jpg">
-<link rel="icon" type="image/svg+xml" href="{prefix}favicon.svg"><link rel="stylesheet" href="{prefix}styles.css"><script src="{prefix}site.js" defer></script>
+<link rel="icon" type="image/svg+xml" href="{prefix}favicon.svg"><link rel="stylesheet" href="{prefix}styles.css?v={style_version}"><script src="{prefix}site.js?v={script_version}" defer></script>
 <script type="application/ld+json">{json.dumps(schema)}</script>
 </head><body>
 <a class="skip-link" href="#main">Skip to content</a>
