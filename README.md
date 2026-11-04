@@ -1,55 +1,36 @@
 # Md. Obaidullah — academic website
 
-A lightweight, responsive website prepared for free GitHub Pages hosting. No installation, build command, paid theme, database, or WordPress plugins are required.
+Academic website for Md. Obaidullah, PhD student in Politics at the University of Virginia.
 
-## Preview
+Live website: https://mdobaidullah.com/
 
-Extract the ZIP and open `index.html` in your browser. Keep the folders together: the pages use `assets/style.css` and `assets/site.js`. The navigation and publication links work without a server. The CV page includes a Print / save as PDF button.
+## Publishing
 
-## Publish on GitHub Pages
+GitHub Pages serves the prebuilt files in the repository root from `main`. No build step or installation is needed to serve the website. Keep `CNAME` and `.nojekyll` in place. The custom domain and existing publishing configuration are preserved.
 
-1. Sign in to GitHub. Create a **public** repository named `YOUR-USERNAME.github.io`, substituting your actual GitHub username.
-2. Upload the **contents** of this folder into the repository root, not the ZIP or its enclosing folder. `index.html` should appear at the top level alongside `assets/`, `publications.html`, and `cv.html`.
-3. In **Settings → Pages**, select **Deploy from a branch**, **main**, and **/(root)**, then save.
-4. Open the address shown in Settings → Pages. Publication can take several minutes. Confirm that the pages work before connecting your domain.
+## Updating the website
 
-Official instructions: https://docs.github.com/en/pages/quickstart
+- Edit `source/content.json` to update publications and CV entries.
+- Edit `source/build.py` to update biography, research, teaching, and other page copy.
+- Edit `source/assets/styles.css` for layout and typography.
+- Edit `source/assets/site.js` for optional publication search.
+- Replace `source/assets/portrait.jpg` to update the portrait.
 
-## Keep mdobaidullah.com
+Install the generator dependencies and regenerate the root files:
 
-Domain renewal remains separate from free hosting. After the GitHub version works:
+```bash
+python3 -m pip install -r source/requirements.txt
+python3 source/build.py
+```
 
-1. Verify your domain in GitHub account settings and add `mdobaidullah.com` in the repository's **Settings → Pages → Custom domain** field.
-2. At the provider managing your DNS, configure the apex domain's A records using the values in GitHub's current documentation below. The published values checked on September 14, 2026 are:
+For page-only changes, `python3 source/build.py --skip-pdf` keeps the existing CV PDF. Commit the generated root files with their source changes. Publishing continues through the existing GitHub Pages configuration.
 
-| Type | Host | Value |
-| --- | --- | --- |
-| A | @ | 185.199.108.153 |
-| A | @ | 185.199.109.153 |
-| A | @ | 185.199.110.153 |
-| A | @ | 185.199.111.153 |
-| CNAME | www | YOUR-USERNAME.github.io |
+The site uses system fonts and loads no trackers or external JavaScript. All publication records are included directly in HTML and remain readable without JavaScript. Search and publication-type filters are optional enhancements.
 
-Replace conflicting website A/AAAA/CNAME records, while preserving any MX and TXT records needed for email. Your DNS may be managed through hosting nameservers rather than Namecheap Advanced DNS; use the active DNS provider.
+## CV
 
-3. Enable **Enforce HTTPS** when GitHub makes it available. DNS and certificate setup can take up to 24 hours.
-4. Check both `mdobaidullah.com` and `www.mdobaidullah.com`, publication links, and contact email. If you use hosting-based email, arrange replacement email service before canceling hosting.
-5. Keep domain renewal active. Only cancel the old hosting after the new site works and the old website and email data are backed up.
+`obaidullah-cv.pdf` is a reconstructed CV generated from the public web CV and bibliography. It replaces a missing download. To use a separately maintained master CV, replace the PDF and keep the same filename.
 
-No CNAME file is included initially so you can preview on the GitHub address before switching your live domain. Saving the custom domain for branch-based publishing creates that file.
+## Content provenance
 
-Official domain instructions: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site
-
-## Edit your website
-
-- `index.html`: biography, research themes, selected work, experience, contact.
-- `publications.html`: journal articles, chapters, reviews, selected public writing.
-- `cv.html`: printable academic CV. Edit it independently when your record changes.
-- `assets/style.css`: colors, typography, spacing, mobile layout, and print layout.
-- `assets/site.js`: mobile navigation and the print button.
-
-Edit the relevant file using GitHub's pencil button and commit the change. GitHub Pages republishes it. If a publication appears on more than one page, update each copy.
-
-## Content notes
-
-This is a redesign based on the public website and its April 2026 CV, not a complete WordPress export. See `CONTENT-NOTES.md` for sources and items to review before publishing. No account, repository, hosting subscription, or DNS setting has been changed.
+The redesign retains all 39 bibliography entries from the previous public site. Verified publication corrections, sources, and earlier migration notes are recorded in `CONTENT-NOTES.md`. The previous version remains available in Git history.

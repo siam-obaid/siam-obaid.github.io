@@ -1,3 +1,27 @@
+# Content and verification notes
+
+Updated November 4, 2026.
+
+The current design is an academic redesign of the public site. All 39 bibliography entries were retained: 25 journal articles, chapters, and book reviews; one current working paper; and 13 public essays.
+
+## Current changes
+
+- Replaced the sidebar and promotional headline with a first-person biography, a modest portrait, and conventional academic navigation and publication lists.
+- Preserved the six existing page routes, contact links, custom domain, and GitHub Pages configuration.
+- Moved “Regime Collapse without Civil War” from working papers to journal articles and added coauthor Rakia Begum, following the publisher record: https://doi.org/10.1177/20578911261492941
+- Updated the Contemporary South Asia citation to 34(3), 554–579, following the publisher issue: https://www.tandfonline.com/toc/ccsa20/34/3
+- Added verified publisher links for selected articles and essays. Titles with no confirmed link remain plain text.
+- Rebuilt the missing PDF CV from the public web CV and bibliography. It is a reconstruction of the public record, rather than a separately supplied master CV. Other historical CV entries and publication metadata retain the previous public site’s information.
+- Publication lists are present in the HTML. Search is an optional enhancement, so the lists remain available without JavaScript.
+
+## Editing and validation
+
+The editable bibliography and CV data are in `source/content.json`. The generator and page copy are in `source/build.py`; styling and optional search are in `source/assets/`. Local links and fragments, JavaScript syntax, publication counts, responsive layouts, and search/filter behavior were checked. The PDF was rendered and visually inspected.
+
+## Historical migration notes
+
+The following notes describe the earlier September migration and are retained for provenance. They do not describe the current layout or current bundled assets.
+
 # Content provenance and migration notes
 
 Prepared September 14, 2026 for Md. Obaidullah.
