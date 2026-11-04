@@ -39,6 +39,7 @@ p:last-child{margin-bottom:0}
 .profile{display:grid;grid-template-columns:minmax(0,1fr) 224px;gap:74px;align-items:start}
 .biography{max-width:690px}
 .biography p{font-size:17.5px;line-height:1.78}
+.biography>p,.page-intro>p,.reading-column>p,.research-section>p,.working-paper>p{text-align:justify;text-align-last:left;text-justify:inter-word;-webkit-hyphens:auto;hyphens:auto;hyphenate-limit-chars:6 3 3;overflow-wrap:break-word}
 .portrait{width:224px;aspect-ratio:4/5;object-fit:cover;border-radius:0}
 .contact-details{margin-top:19px;font:14px/1.75 var(--sans);color:var(--muted);overflow-wrap:anywhere}
 .contact-details p{margin:0 0 12px}
