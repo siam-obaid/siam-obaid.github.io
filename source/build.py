@@ -48,7 +48,7 @@ def article(p, home=False, with_search=True):
     metadata += "."
     actions = ""
     if p.get("url"):
-        label = "Read essay" if p["t"] == "public" else "Article"
+        label = p.get("link_label") or {"public": "Read essay", "chapter": "Chapter", "review": "Review"}.get(p["t"], "Article")
         actions = f'<div class="publication-actions"><a href="{E(p["url"])}">{label}<span class="visually-hidden">: {title}</span></a></div>'
     terms = " ".join([p["title"], p["venue"], str(p["y"]), authors(p), p["th"]])
     attrs = f' data-publication data-type="{p["t"]}" data-search="{E(terms)}"' if with_search else ""
@@ -56,21 +56,24 @@ def article(p, home=False, with_search=True):
 
 
 def page(filename, title, description, body):
-    nav = "".join(f'<a href="{url}"{(" aria-current="+chr(34)+"page"+chr(34)) if url == filename else ""}>{name}</a>' for url, name in NAV)
+    prefix = "/" if filename == "404.html" else ""
+    nav = "".join(f'<a href="{prefix}{url}"{(" aria-current="+chr(34)+"page"+chr(34)) if url == filename else ""}>{name}</a>' for url, name in NAV)
+    indexing = '<meta name="robots" content="noindex">' if filename == "404.html" else ""
     canonical = SITE_URL + ("/" if filename == "index.html" else "/" + filename)
     schema = {"@context": "https://schema.org", "@type": "Person", "name": "Md. Obaidullah", "url": SITE_URL, "jobTitle": "PhD Student in Politics", "affiliation": {"@type": "CollegeOrUniversity", "name": "University of Virginia"}, "sameAs": [SCHOLAR, LINKEDIN]}
     return f'''<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{E(title)} | Md. Obaidullah</title><meta name="description" content="{E(description)}">
+{indexing}
 <meta name="theme-color" content="#263f50"><link rel="canonical" href="{canonical}">
 <meta property="og:title" content="{E(title)} | Md. Obaidullah"><meta property="og:description" content="{E(description)}"><meta property="og:type" content="website"><meta property="og:url" content="{canonical}"><meta property="og:image" content="{SITE_URL}/portrait.jpg">
-<link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="stylesheet" href="styles.css"><script src="site.js" defer></script>
+<link rel="icon" type="image/svg+xml" href="{prefix}favicon.svg"><link rel="stylesheet" href="{prefix}styles.css"><script src="{prefix}site.js" defer></script>
 <script type="application/ld+json">{json.dumps(schema)}</script>
 </head><body>
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header wrap"><div class="masthead"><p class="site-name"><a href="index.html">Md. Obaidullah</a></p><p class="affiliation"><a href="https://politics.virginia.edu/">Department of Politics</a><span class="affiliation-divider" aria-hidden="true"> · </span><br><a href="https://www.virginia.edu/">University of Virginia</a></p></div><nav class="primary-nav" aria-label="Main navigation">{nav}</nav></header>
-<main class="wrap" id="main">{body}</main>
+<header class="site-header wrap"><div class="masthead"><p class="site-name"><a href="{prefix}index.html">Md. Obaidullah</a></p><p class="affiliation"><a href="https://politics.virginia.edu/">Department of Politics</a><span class="affiliation-divider" aria-hidden="true"> · </span><br><a href="https://www.virginia.edu/">University of Virginia</a></p></div><nav class="primary-nav" aria-label="Main navigation">{nav}</nav></header>
+<main class="wrap" id="main" tabindex="-1">{body}</main>
 <footer class="site-footer wrap"><p>Md. Obaidullah · University of Virginia · <a href="mailto:{EMAIL}">Email</a></p><p>Updated November 2026</p></footer>
 </body></html>'''
 
@@ -105,8 +108,9 @@ def research():
 
 
 def search_controls(noun, total, with_type=False):
+    venue_label = "outlet" if noun == "essay" else "journal"
     type_control = '<div class="type-field"><label for="publication-type">Publication type</label><select id="publication-type"><option value="all">All types</option>'+''.join(f'<option value="{k}">{name}</option>' for k,name in KINDS)+'</select></div>' if with_type else ''
-    return f'''<div class="search-tools"><div class="search-field"><label for="publication-search">Search {noun}s</label><input id="publication-search" type="search" placeholder="Title, author, journal, or year" autocomplete="off" aria-controls="search-results"></div>{type_control}<output id="search-count" class="search-count" aria-live="polite">{total} {noun}s</output></div>'''
+    return f'''<div class="search-tools"><div class="search-field"><label for="publication-search">Search {noun}s</label><input id="publication-search" type="search" placeholder="Title, author, {venue_label}, or year" autocomplete="off" aria-controls="search-results"></div>{type_control}<output id="search-count" class="search-count" aria-live="polite">{total} {noun}s</output></div>'''
 
 
 def publications():
@@ -225,7 +229,7 @@ def build():
      ('teaching.html','Teaching','Teaching experience and interests of Md. Obaidullah.',teaching()),
      ('cv.html','Curriculum Vitae','Education, academic experience, publications, and service of Md. Obaidullah. Download a PDF CV.',cv())]
     for filename,title,description,body in pages:(DIST/filename).write_text(page(filename,title,description,body))
-    (DIST/'404.html').write_text(page('404.html','Page not found','Page not found.','<h1>Page not found</h1><p>The page may have moved. Visit the <a href="index.html">home page</a> or browse <a href="publications.html">publications</a>.</p>'))
+    (DIST/'404.html').write_text(page('404.html','Page not found','Page not found.','<h1>Page not found</h1><p>The page may have moved. Visit the <a href="/index.html">home page</a> or browse <a href="/publications.html">publications</a>.</p>'))
     (DIST/'favicon.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" fill="#263f50"/><text x="24" y="32" text-anchor="middle" fill="white" font-family="Georgia,serif" font-size="25">O</text></svg>')
     (DIST/'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: '+SITE_URL+'/sitemap.xml\n')
     (DIST/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+SITE_URL+('/' if file=='index.html' else '/'+file)+'</loc></url>' for file,*_ in pages)+'</urlset>')

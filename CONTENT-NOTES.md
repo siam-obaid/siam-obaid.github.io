@@ -4,6 +4,18 @@ Updated November 4, 2026.
 
 The current design is an academic redesign of the public site. All 39 bibliography entries were retained: 25 journal articles, chapters, and book reviews; one current working paper; and 13 public essays.
 
+## Second-pass website audit — November 4, 2026
+
+- Fixed section links when their publication category was hidden by a search or type filter.
+- Fixed the missing-page screen’s asset and navigation paths so recovery works from nested addresses; excluded that screen from indexing.
+- Kept result counts visible on mobile, added a keyboard-focus target for the skip link, and increased input and placeholder contrast.
+- Added 29 confirmed source links. All 25 scholarly publication records now link to a work or a clearly labelled publisher issue/contents page; 10 of 13 essays have source links.
+- Completed citation details from publisher metadata. Corrected the first-online years of living-reference entries, used final issue years for paginated reviews, corrected the Sirajgonj title spelling, and corrected the coauthor initials for Habib Mohammad Ali and Zobayer Ahmed.
+- Regenerated the PDF CV from the same corrected bibliography and checked its rendered pages and link annotations.
+- Checked page structure, local links and fragments, search/filter behavior, missing-page recovery, keyboard focus, and all six layouts at phone widths. HTTPS and www redirects, main-page responses, assets, and the CV download were also checked.
+
+The following essay source URLs remain unconfirmed and their titles remain plain text: “Invisible Diplomats” (New Age); “CPEC’s Afghan Push Poses a New Challenge for India” (East Asia Forum); “Rohingya Crisis Demands More Than Paper Promises” (New Age). The publication records themselves were retained from the owner’s previous site.
+
 ## Current changes
 
 - Replaced the sidebar and promotional headline with a first-person biography, a modest portrait, and conventional academic navigation and publication lists.

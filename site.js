@@ -23,6 +23,13 @@ document.querySelectorAll("[data-search-list]").forEach((list) => {
   };
   search.addEventListener("input", filter);
   if (type) type.addEventListener("change", filter);
+  document.querySelectorAll(".jump-links a[href^='#']").forEach(link => link.addEventListener("click", () => {
+    const target = document.getElementById(link.getAttribute("href").slice(1));
+    if (!target || !list.contains(target) || !target.hidden) return;
+    search.value = "";
+    if (type) type.value = "all";
+    filter();
+  }));
   document.querySelectorAll("[data-reset-search]").forEach(button => button.addEventListener("click", () => {
     search.value = "";
     if (type) type.value = "all";
