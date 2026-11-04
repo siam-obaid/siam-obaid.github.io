@@ -26,7 +26,7 @@ SCHOLAR = "https://scholar.google.com/citations?user=lSusWyYAAAAJ&hl=en"
 LINKEDIN = "https://www.linkedin.com/in/md-obaidullah-14322b154/"
 KINDS = [("article", "Journal articles"), ("chapter", "Book chapters"), ("review", "Book reviews")]
 PAPERS = CONTENT["publications"]
-NAV = [("index.html", "Home"), ("research.html", "Research"), ("publications.html", "Publications"), ("writing.html", "Public Writing"), ("teaching.html", "Teaching"), ("cv.html", "CV")]
+NAV = [("index.html", "Home"), ("research.html", "Research"), ("publications.html", "Publications"), ("writing.html", "Public Writing"), ("blog.html", "Blog"), ("teaching.html", "Teaching"), ("cv.html", "CV")]
 E = html.escape
 
 
@@ -138,6 +138,11 @@ def writing():
     return body
 
 
+def blog():
+    return '''<header class="page-intro"><h1>Blog</h1><p>Notes and reflections on international politics, research, and academic life.</p></header>
+<div class="reading-column"><p class="paper-note">No posts yet.</p></div>'''
+
+
 def teaching():
     courses = [
       ('Fall 2025','Introduction to Law in American Society','PS 380 · Instructor: Troy Gibson'),
@@ -230,6 +235,7 @@ def build():
      ('research.html','Research','Research on foreign policy, great power competition, repression, migration, and border politics.',research()),
      ('publications.html','Publications','Journal articles, book chapters, and book reviews by Md. Obaidullah.',publications()),
      ('writing.html','Public Writing','Essays and commentary by Md. Obaidullah on South Asian politics, international security, and great power competition.',writing()),
+     ('blog.html','Blog','Notes and reflections by Md. Obaidullah on international politics, research, and academic life.',blog()),
      ('teaching.html','Teaching','Teaching experience and interests of Md. Obaidullah.',teaching()),
      ('cv.html','Curriculum Vitae','Education, academic experience, publications, and service of Md. Obaidullah. Download a PDF CV.',cv())]
     for filename,title,description,body in pages:(DIST/filename).write_text(page(filename,title,description,body))
@@ -239,7 +245,7 @@ def build():
     (DIST/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+SITE_URL+('/' if file=='index.html' else '/'+file)+'</loc></url>' for file,*_ in pages)+'</urlset>')
     if '--skip-pdf' not in sys.argv:
         create_pdf()
-    print('Built 6 pages, a 404 page, and a downloadable CV. Bibliography entries:',len(PAPERS))
+    print(f'Built {len(pages)} pages, a 404 page, and a downloadable CV. Bibliography entries:',len(PAPERS))
 
 
 if __name__=='__main__':build()
