@@ -11,7 +11,8 @@ GitHub Pages serves the prebuilt files in the repository root from `main`. No bu
 ## Updating the website
 
 - Edit `source/content.json` to update publications and CV entries.
-- Edit `source/build.py` to update biography, research, teaching, blog, and other page copy.
+- Edit `source/build.py` to update biography, research, teaching, and other page copy.
+- Edit `source/blog-listing.html` for the Blog index. Published article HTML lives in `source/posts/` and is copied to the repository root by the generator; the Sudan post’s original Markdown is retained there. Keep each post’s `data-post-views` slug registered in the view-counter service.
 - Edit `source/assets/styles.css` for layout and typography.
 - Edit `source/assets/site.js` for optional publication search.
 - Replace `source/assets/portrait.jpg` to update the portrait.

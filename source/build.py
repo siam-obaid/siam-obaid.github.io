@@ -139,8 +139,7 @@ def writing():
 
 
 def blog():
-    return '''<header class="page-intro"><h1>Blog</h1><p>Notes and reflections on international politics, research, and academic life.</p></header>
-<div class="reading-column"><p class="paper-note">No posts yet.</p></div>'''
+    return (ROOT / "blog-listing.html").read_text()
 
 
 def teaching():
@@ -239,10 +238,13 @@ def build():
      ('teaching.html','Teaching','Teaching experience and interests of Md. Obaidullah.',teaching()),
      ('cv.html','Curriculum Vitae','Education, academic experience, publications, and service of Md. Obaidullah. Download a PDF CV.',cv())]
     for filename,title,description,body in pages:(DIST/filename).write_text(page(filename,title,description,body))
+    posts = sorted((ROOT / 'posts').glob('*.html'))
+    for post in posts:
+        shutil.copy2(post, DIST / post.name)
     (DIST/'404.html').write_text(page('404.html','Page not found','Page not found.','<h1>Page not found</h1><p>The page may have moved. Visit the <a href="/index.html">home page</a> or browse <a href="/publications.html">publications</a>.</p>'))
     (DIST/'favicon.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" fill="#263f50"/><text x="24" y="32" text-anchor="middle" fill="white" font-family="Georgia,serif" font-size="25">O</text></svg>')
     (DIST/'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: '+SITE_URL+'/sitemap.xml\n')
-    (DIST/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+SITE_URL+('/' if file=='index.html' else '/'+file)+'</loc></url>' for file,*_ in pages)+'</urlset>')
+    (DIST/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+SITE_URL+('/' if file=='index.html' else '/'+file)+'</loc></url>' for file in [p[0] for p in pages] + [post.name for post in posts])+'</urlset>')
     if '--skip-pdf' not in sys.argv:
         create_pdf()
     print(f'Built {len(pages)} pages, a 404 page, and a downloadable CV. Bibliography entries:',len(PAPERS))
