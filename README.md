@@ -24,13 +24,13 @@ python3 -m pip install -r source/requirements.txt
 python3 source/build.py
 ```
 
-For page-only changes, `python3 source/build.py --skip-pdf` keeps the existing CV PDF. Commit the generated root files with their source changes. Publishing continues through the existing GitHub Pages configuration.
+The generator copies the maintained CV from `source/assets/obaidullah-cv.pdf` and versions PDF links by its content hash. `python3 source/build.py --skip-pdf` also skips the legacy PDF fallback when no maintained PDF is present. Commit the generated root files with their source changes. Publishing continues through the existing GitHub Pages configuration.
 
 The site uses Palatino when installed, with a self-hosted TeX Gyre Pagella web font for matching typography on other devices. The cool slate background and typography are shared across all pages. Font files and their license are in `source/assets/fonts/`, copied to `fonts/` by the generator. The site loads no trackers, external font services, or external JavaScript. All publication records are included directly in HTML and remain readable without JavaScript. Search and publication-type filters are optional enhancements.
 
 ## CV
 
-`obaidullah-cv.pdf` is a reconstructed CV generated from the public web CV and bibliography. It replaces a missing download. To use a separately maintained master CV, replace the PDF and keep the same filename.
+`obaidullah-cv.pdf` is the current five-page academic CV exported from Overleaf on November 5, 2026. Its maintained source copy is `source/assets/obaidullah-cv.pdf`. To update it, replace that file and the root PDF with the same exported PDF, then update the Home and CV links to the PDF’s first 12 SHA-256 characters. The generator preserves the maintained PDF instead of replacing it with a reconstructed CV.
 
 ## Content provenance
 

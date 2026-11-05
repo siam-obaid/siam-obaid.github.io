@@ -85,6 +85,14 @@ def selected(prefix):
     return next(p for p in PAPERS if p["title"].startswith(prefix))
 
 
+def cv_pdf_url():
+    pdf = ROOT / 'assets' / 'obaidullah-cv.pdf'
+    if not pdf.exists():
+        pdf = DIST / 'obaidullah-cv.pdf'
+    version = hashlib.sha256(pdf.read_bytes()).hexdigest()[:12] if pdf.exists() else 'current'
+    return 'obaidullah-cv.pdf?v=' + version
+
+
 def home():
     picks = [selected("Regime Collapse"), selected("Machiavellian"), selected("Delivering Attraction")]
     return f'''<div class="profile">
@@ -92,7 +100,7 @@ def home():
 <p>I am a PhD student in the <a href="https://politics.virginia.edu/">Department of Politics at the University of Virginia</a>, where I study international relations and political methodology.</p>
 <p>My research focuses on international conflict and security, foreign policy, and great power competition. I am particularly interested in how domestic politics shapes states’ relations with external powers. Much of my work examines South Asia, with additional research on the Middle East, migration, refugees, and border politics.</p>
 <p>I use quantitative analysis, qualitative case studies, and computational methods. Before joining UVA, I earned an MA in Political Science from the University of Southern Mississippi and taught in the Department of Development Studies at Daffodil International University. I hold bachelor’s and master’s degrees in Public Administration from the University of Barishal, Bangladesh.</p>
-<div class="inline-links"><a href="research.html">Research</a><a href="obaidullah-cv.pdf">Curriculum vitae (PDF)</a><a href="{SCHOLAR}">Google Scholar</a></div></div>
+<div class="inline-links"><a href="research.html">Research</a><a href="{cv_pdf_url()}" target="_blank" rel="noopener noreferrer" aria-label="View or download my CV as a PDF (opens in a new tab)">View / download CV</a><a href="{SCHOLAR}">Google Scholar</a></div></div>
 <aside aria-label="Portrait and contact"><img class="portrait" src="portrait.jpg" alt="Md. Obaidullah" width="520" height="650" fetchpriority="high"><div class="contact-details"><p>Department of Politics<br>University of Virginia<br>Charlottesville, Virginia</p><p><a href="mailto:{EMAIL}">{EMAIL}</a></p><p class="contact-links"><a href="{SCHOLAR}">Google Scholar</a><a href="{LINKEDIN}">LinkedIn</a></p></div></aside></div>
 <section class="section" aria-labelledby="selected-publications"><div class="section-heading"><h2 id="selected-publications">Selected publications</h2><a href="publications.html">All publications →</a></div><ul class="publication-list">{"".join(article(p,home=True,with_search=False) for p in picks)}</ul></section>
 <section class="section" aria-labelledby="news"><div class="section-heading"><h2 id="news">Recent news</h2></div><ul class="news"><li><time datetime="2026-10">October 2026</time><span>“<a href="https://doi.org/10.1177/20578911261492941">Regime Collapse without Civil War</a>,” coauthored with Rakia Begum, published online in <cite>Asian Journal of Comparative Politics</cite>.</span></li><li><time datetime="2026">2026</time><span>Awarded the John L. Nau III Graduate Fellowship at the University of Virginia.</span></li></ul></section>'''
@@ -164,11 +172,11 @@ def cv_section(section):
 
 
 def cv():
-    body = '<header class="page-intro"><div class="cv-topline"><h1>Curriculum Vitae</h1><a class="download-link" href="obaidullah-cv.pdf" download>Download CV (PDF) ↓</a></div></header>'
+    body = f'<header class="page-intro"><div class="cv-topline"><h1>Curriculum Vitae</h1><a class="download-link" href="{cv_pdf_url()}" target="_blank" rel="noopener noreferrer" aria-label="View or download my CV as a PDF (opens in a new tab)">View / download CV ↗</a></div></header>'
     for section in CONTENT['cv_sections']:
         body += cv_section(section)
         if section['title']=='Academic appointments':
-            body += '<section class="cv-section"><h2>Publications</h2><p>See the <a href="publications.html">publication list</a> for journal articles, book chapters, and book reviews, and <a href="writing.html">Public Writing</a> for essays and commentary. The downloadable CV includes the complete bibliography listed on this website.</p></section>'
+            body += '<section class="cv-section"><h2>Publications</h2><p>See the <a href="publications.html">publication list</a> for journal articles, book chapters, and book reviews, and <a href="writing.html">Public Writing</a> for essays and commentary.</p></section>'
     journals = '; '.join(j for j,n in CONTENT['review_journals'])
     body += '<section class="cv-section"><h2>Scholarly service</h2><p>Peer reviewer for '+E(journals)+'.</p></section>'
     body += '<section class="cv-section"><h2>Skills and languages</h2><dl class="skill-list">'+''.join('<div><dt>'+E(s['title'])+'</dt><dd>'+E(s['description'])+'</dd></div>' for s in CONTENT['skills'])+'</dl></section>'
@@ -245,7 +253,10 @@ def build():
     (DIST/'favicon.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" fill="#263f50"/><text x="24" y="32" text-anchor="middle" fill="white" font-family="Georgia,serif" font-size="25">O</text></svg>')
     (DIST/'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: '+SITE_URL+'/sitemap.xml\n')
     (DIST/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+SITE_URL+('/' if file=='index.html' else '/'+file)+'</loc></url>' for file in [p[0] for p in pages] + [post.name for post in posts])+'</urlset>')
-    if '--skip-pdf' not in sys.argv:
+    maintained_cv = ROOT / 'assets' / 'obaidullah-cv.pdf'
+    if maintained_cv.exists():
+        shutil.copy2(maintained_cv, DIST / 'obaidullah-cv.pdf')
+    elif '--skip-pdf' not in sys.argv:
         create_pdf()
     print(f'Built {len(pages)} pages, a 404 page, and a downloadable CV. Bibliography entries:',len(PAPERS))
 
