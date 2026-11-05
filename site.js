@@ -40,3 +40,50 @@ document.querySelectorAll("[data-search-list]").forEach((list) => {
   if (params.has("q")) search.value = params.get("q");
   filter();
 });
+
+ 
+// Shared, server-backed view totals. Values are rendered as ordinary text, not images.
+document.querySelectorAll("[data-post-views]").forEach((box) => {
+  const slug = box.dataset.postViews;
+  const value = box.querySelector("[data-view-value]");
+  const retry = box.querySelector("[data-view-retry]");
+  if (!slug || !value) return;
+  let attemptedRecord = false;
+  let loading = false;
+  const loadCount = async () => {
+    if (loading) return;
+    loading = true;
+    box.setAttribute("aria-busy", "true");
+    if (retry) retry.hidden = true;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    const record = box.dataset.recordView === "true" && !attemptedRecord;
+    if (record) attemptedRecord = true;
+    try {
+      const response = await fetch("https://obaidullah-blog-views.patientfort.chatgpt.site/api/views?post=" + encodeURIComponent(slug), {
+        method: record ? "POST" : "GET",
+        credentials: "omit",
+        cache: "no-store",
+        referrerPolicy: "no-referrer",
+        signal: controller.signal
+      });
+      if (!response.ok) throw new Error("Count request failed");
+      const result = await response.json();
+      if (result.post !== slug || !Number.isSafeInteger(result.views) || result.views < 0) {
+        throw new Error("Invalid view total");
+      }
+      value.textContent = result.views.toLocaleString() + (value.dataset.viewSuffix || "");
+      value.dataset.state = "ready";
+    } catch {
+      value.textContent = value.dataset.viewFallback || "Unavailable";
+      value.dataset.state = "error";
+      if (retry) retry.hidden = false;
+    } finally {
+      clearTimeout(timeout);
+      loading = false;
+      box.setAttribute("aria-busy", "false");
+    }
+  };
+  if (retry) retry.addEventListener("click", loadCount);
+  loadCount();
+});
