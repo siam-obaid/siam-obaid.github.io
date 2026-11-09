@@ -235,7 +235,7 @@ def create_pdf():
 
 def build():
     DIST.mkdir(exist_ok=True)
-    for source,target in [('styles.css','styles.css'),('site.js','site.js'),('portrait.jpg','portrait.jpg')]:shutil.copy2(ROOT/'assets'/source,DIST/target)
+    for source,target in [('styles.css','styles.css'),('site.js','site.js'),('comments.css','comments.css'),('comments.js','comments.js'),('portrait.jpg','portrait.jpg')]:shutil.copy2(ROOT/'assets'/source,DIST/target)
     shutil.copytree(ROOT/'assets'/'fonts', DIST/'fonts', dirs_exist_ok=True)
     pages = [
      ('index.html','Home','Md. Obaidullah is a PhD student in Politics at the University of Virginia. Research on international security, foreign policy, and great power competition.',home()),
@@ -262,3 +262,4 @@ def build():
 
 
 if __name__=='__main__':build()
+

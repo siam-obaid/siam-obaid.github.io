@@ -35,3 +35,8 @@ The site uses Palatino when installed, with a self-hosted TeX Gyre Pagella web f
 ## Content provenance
 
 The redesign retains all 39 bibliography entries from the previous public site. Verified publication corrections, sources, and earlier migration notes are recorded in `CONTENT-NOTES.md`. The previous version remains available in Git history.
+
+
+## Reader comments
+
+Every blog post loads `comments.js` and `comments.css`. The section sits below the article and saves comments in the existing public D1-backed service. Readers provide a public display name and plain-text comment; no account or email is required. Comments belong to the post’s `data-post-views` slug. New posts copied from a current template inherit the form automatically. Keep the same slug registered in the backend alongside its view counter. Source copies of the assets live in `source/assets/`.
